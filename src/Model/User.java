@@ -78,7 +78,7 @@ public class User {
         return this;
     }
 
-    public String assetsLiabilitiesPath() {
+    public String getAssetsLiabilitiesPath() {
         return assetsLiabilitiesPath;
     }
 

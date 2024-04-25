@@ -1,7 +1,7 @@
 package Model;
 import java.util.Date;
 
-public class InvestmentTransaction {
+public class InvestmentTransaction extends Transaction{
     private int id;
     private Date date;
     private double amountInvested;
@@ -10,6 +10,7 @@ public class InvestmentTransaction {
     private String description;
 
     public InvestmentTransaction(int id, Date date, double amountInvested, double currentValue, String subcategory, String description) {
+        super(id, date);
         this.id = id;
         this.date = date;
         this.amountInvested = amountInvested;
