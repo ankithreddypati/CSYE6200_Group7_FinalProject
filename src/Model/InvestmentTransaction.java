@@ -17,24 +17,62 @@ public class InvestmentTransaction {
         this.subcategory = subcategory;
         this.description = description;
     }
+public int getId() {
+    return id;
+}
 
-    // Getters and Setters for all attributes
+public void setId(int id) {
+    this.id = id;
+}
 
-    public int getId() {
-        return id;
-    }
+public Date getDate() {
+    return date;
+}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+public void setDate(Date date) {
+    this.date = date;
+}
 
-    public Date getDate() {
-        return date;
-    }
+public double getAmountInvested() {
+    return amountInvested;
+}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+public void setAmountInvested(double amountInvested) {
+    this.amountInvested = amountInvested;
+}
+
+public double getCurrentValue() {
+    return currentValue;
+}
+public void setCurrentValue(double currentValue) {
+    this.currentValue = currentValue;
+}
+
+public String getSubcategory() {
+    return subcategory;
+}
+
+public void setSubcategory(String subcategory) {
+    this.subcategory = subcategory;
+}
+
+public String getDescription() {
+    return description;
+}
+
+public void setDescription(String description) {
+    this.description = description;
+}
+
+// Method to display transaction details
+
+public void displayTransactionDetails() {
+    System.out.println("Investment in " + subcategory + " - Invested: " + amountInvested + ", Current Value: " + currentValue + ", Description: " + description);
+}
+
+    
+}
+
 
     public double getAmountInvested() {
         return amountInvested;
