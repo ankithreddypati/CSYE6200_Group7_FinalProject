@@ -1,11 +1,13 @@
-ID,Category,Subcategory,Date,Amount,CurrentValue,Description
-3,Investments,Real Estate,2021-05-20,75000,80000,Investment in residential property
-4,Investments,Stocks,2021-07-08,20000,24000,Investment in Google stocks
-5,Investments,Bonds,2021-09-14,10000,10500,Investment in government bonds
-6,Investments,Crypto,2021-10-30,3000,15000,Investment in Ethereum
-7,Investments,Mutual Funds,2021-12-05,25000,26000,Investment in Vanguard Total Stock Market Index Fund
-8,Investments,Real Estate,2022-02-18,80000,82000,Investment in commercial property
-9,Investments,Crypto,2022-04-22,7000,23000,Investment in Dogecoin
-10,Investments,Stocks,2022-06-11,30000,35000,Investment in Amazon stocks
-
-
+ID,Date,Category,Subcategory,Invested Amount,Current Value,Description
+1,2021-05-20,Investments,Real Estate,75000,80000,Investment in residential property
+2,2021-07-08,Investments,Stocks,20000,24000,Investment in Google stocks
+3,2021-09-14,Investments,Bonds,10000,10500,Investment in government bonds
+4,2021-10-30,Investments,Crypto,3000,15000,Investment in Ethereum
+5,2021-12-05,Investments,Mutual Funds,25000,26000,Investment in Vanguard Total Stock Market Index Fund
+6,2022-02-18,Investments,Real Estate,80000,82000,Investment in commercial property
+7,2022-04-22,Investments,Crypto,7000,23000,Investment in Dogecoin
+8,2022-06-11,Investments,Stocks,30000,35000,Investment in Amazon stocks
+9,2022-08-25,Investments,Bonds,15000,16000,Investment in corporate bonds
+10,2022-10-14,Investments,Real Estate,90000,95000,Investment in industrial property
+11,2022-12-03,Investments,Stocks,40000,42000,Investment in Tesla stocks
+12,2023-01-20,Investments,Crypto,10000,28000,Investment in Bitcoin

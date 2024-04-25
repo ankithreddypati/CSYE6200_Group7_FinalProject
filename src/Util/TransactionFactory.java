@@ -30,7 +30,6 @@ public class TransactionFactory {
                     description = data[5];
                     return new AssetLiabilityTransaction(id, date, amount, category, subcategory, description);
                 case "Investment":
-                    date = parseDate(data[3]);
                     amount = safeParseDouble(data[4]);
                     double currentValue = safeParseDouble(data[5]);
                     subcategory = data[2];
