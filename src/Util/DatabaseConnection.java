@@ -19,7 +19,8 @@ public class DatabaseConnection {
                     try {
                         String url = "jdbc:mysql://localhost:3306/";
                         String user = "root";
-                        String password = "Password!@#123";
+                        //String password = "Password!@#123";
+                        String password = "2001050926";
                         Connection tempConn = DriverManager.getConnection(url, user, password);
                         ensureDatabase(tempConn);
                         connection = DriverManager.getConnection(url + "mydatabase", user, password);
