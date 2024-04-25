@@ -46,7 +46,31 @@ public void setAmountInvested(double amountInvested) {
 public double getCurrentValue() {
     return currentValue;
 }
+public void setCurrentValue(double currentValue) {
+    this.currentValue = currentValue;
+}
 
+public String getSubcategory() {
+    return subcategory;
+}
+
+public void setSubcategory(String subcategory) {
+    this.subcategory = subcategory;
+}
+
+public String getDescription() {
+    return description;
+}
+
+public void setDescription(String description) {
+    this.description = description;
+}
+
+// Method to display transaction details
+
+public void displayTransactionDetails() {
+    System.out.println("Investment in " + subcategory + " - Invested: " + amountInvested + ", Current Value: " + currentValue + ", Description: " + description);
+}
 
     
 }
