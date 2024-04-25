@@ -73,18 +73,3 @@ public void displayTransactionDetails() {
     
 }
 
-
-    public double getAmountInvested() {
-        return amountInvested;
-    }
-
-    public void setAmountInvested(double amountInvested) {
-        this.amountInvested = amountInvested;
-    }
-
-    public double getCurrentValue() {
-        return currentValue;
-    }
-
-   
-}
