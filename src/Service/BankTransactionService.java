@@ -12,6 +12,9 @@ public class BankTransactionService {
 
     public BankTransactionService(String filePath) {
         this.transactions = CSVReader.readBankTransactions(filePath);
+
+
+        System.out.println(this.transactions);
     }
 
     public List<BankTransaction> getTransactions() {

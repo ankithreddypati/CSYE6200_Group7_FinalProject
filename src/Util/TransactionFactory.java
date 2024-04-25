@@ -30,10 +30,11 @@ public class TransactionFactory {
                     description = data[5];
                     return new AssetLiabilityTransaction(id, date, amount, category, subcategory, description);
                 case "Investment":
-                    amount = safeParseDouble(data[2]);
-                    double currentValue = safeParseDouble(data[3]);
-                    subcategory = data[4];
-                    description = data[5];
+                    date = parseDate(data[3]);
+                    amount = safeParseDouble(data[4]);
+                    double currentValue = safeParseDouble(data[5]);
+                    subcategory = data[2];
+                    description = data[6];
                     return new InvestmentTransaction(id, date, amount, currentValue, subcategory, description);
                 default:
                     throw new IllegalArgumentException("Unknown CSV type: " + csvType);

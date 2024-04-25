@@ -1,4 +1,11 @@
 ID,Category,Subcategory,Date,Amount,CurrentValue,Description
-1,Investments,Stocks,2021-01-15,15000,18000,Investment in Apple Inc. stocks
-2,Investments,Crypto,2021-03-10,5000,20000,Investment in Bitcoin
+3,Investments,Real Estate,2021-05-20,75000,80000,Investment in residential property
+4,Investments,Stocks,2021-07-08,20000,24000,Investment in Google stocks
+5,Investments,Bonds,2021-09-14,10000,10500,Investment in government bonds
+6,Investments,Crypto,2021-10-30,3000,15000,Investment in Ethereum
+7,Investments,Mutual Funds,2021-12-05,25000,26000,Investment in Vanguard Total Stock Market Index Fund
+8,Investments,Real Estate,2022-02-18,80000,82000,Investment in commercial property
+9,Investments,Crypto,2022-04-22,7000,23000,Investment in Dogecoin
+10,Investments,Stocks,2022-06-11,30000,35000,Investment in Amazon stocks
+
 

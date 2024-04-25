@@ -2,6 +2,7 @@ package View;
 
 import Model.User;
 import Service.BankTransactionService;
+import Service.InvestmentTransactionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class DashboardFrame extends JFrame {
         setTitle("User Dashboard: " + user.getUsername());
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        System.out.println(currentUser.getBankTransactionsPath());
         // Initialize the service with the path to the bank transactions CSV
         this.bankTransactionService = new BankTransactionService(currentUser.getBankTransactionsPath());
 
@@ -75,6 +76,8 @@ public class DashboardFrame extends JFrame {
         // Pass the service to the panel
         BankTransactionsPanel bankTransactionsPanel = new BankTransactionsPanel(bankTransactionService);
 
+        InvestmentTransactionService invServ = new InvestmentTransactionService(currentUser.getAssetsLiabilitiesPath());
+        InvestmentTransactionPanel invPanel = new InvestmentTransactionPanel(invServ);
         JPanel assetsLiabilitiesPanel = new JPanel();
         assetsLiabilitiesPanel.add(new JLabel("Assets and liabilities details displayed here."));
         JPanel investmentsPanel = new JPanel();
@@ -82,7 +85,7 @@ public class DashboardFrame extends JFrame {
 
         rightPanel.add(bankTransactionsPanel, "BankTransactions");
         rightPanel.add(assetsLiabilitiesPanel, "AssetsLiabilities");
-        rightPanel.add(investmentsPanel, "Investments");
+        rightPanel.add(invPanel, "Investments");
 
         splitPane.setRightComponent(rightPanel);
     }
