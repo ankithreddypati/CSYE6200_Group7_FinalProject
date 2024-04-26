@@ -1,8 +1,8 @@
 ID,Date,Amount,Type,Category,Description
 1,2021-01-01,50000.00,Credit,Salary,Monthly salary
-2,2021-01-03,-10000.00,Debit,Groceries,Supermarket shopping
+2,2021-01-03,10000.00,Debit,Groceries,Supermarket shopping
 3,2023-04-01,2000.00,Credit,Salary,Monthly salary
-4,2023-04-02,-5000.00,Debit,Groceries,Walmart purchase
-5,2023-04-03,-1500.00,Debit,Utilities,Internet bill
+4,2023-04-02,5000.00,Debit,Groceries,Walmart purchase
+5,2023-04-03,1500.00,Debit,Utilities,Internet bill
 6,2023-04-04,1500.00,Credit,Transfer,Transfer received
-7,2023-04-05,-10000.00,Debit,Entertainment,Concert tickets
+7,2023-04-05,10000.00,Debit,Entertainment,Concert tickets

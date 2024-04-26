@@ -20,19 +20,10 @@ public class AssetLiabilityTransactionService {
     }
 
     public double calculateCurrentNetWorth() {
-        double totalAssets = transactions.stream()
-                .filter(t -> "Asset".equals(t.getCategory()))
-                .mapToDouble(AssetLiabilityTransaction::getValue)
-                .sum();
-
-        double totalLiabilities = transactions.stream()
-                .filter(t -> "Liability".equals(t.getCategory()))
-                .mapToDouble(AssetLiabilityTransaction::getValue)
-                .sum();
-
+        double totalAssets = getTotalValueByCategory("Asset");
+        double totalLiabilities = getTotalValueByCategory("Liability");
         return totalAssets - totalLiabilities;
     }
-
 
     public double getTotalValueByCategory(String category) {
         return transactions.stream()

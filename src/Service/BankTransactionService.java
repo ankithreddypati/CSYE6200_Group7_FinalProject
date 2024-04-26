@@ -12,9 +12,6 @@ public class BankTransactionService {
 
     public BankTransactionService(String filePath) {
         this.transactions = CSVReader.readBankTransactions(filePath);
-
-
-        System.out.println(this.transactions);
     }
 
     public List<BankTransaction> getTransactions() {
@@ -22,9 +19,17 @@ public class BankTransactionService {
     }
 
     public double calculateCurrentBalance() {
-        return transactions.stream()
-                .mapToDouble(t -> "Credit".equals(t.getType()) ? t.getAmount() : -t.getAmount())
+        double totalCredits = transactions.stream()
+                .filter(t -> "Credit".equals(t.getType()))
+                .mapToDouble(BankTransaction::getAmount)
                 .sum();
+
+        double totalDebits = transactions.stream()
+                .filter(t -> "Debit".equals(t.getType()))
+                .mapToDouble(BankTransaction::getAmount)
+                .sum();
+
+        return totalCredits - totalDebits;
     }
 
     public List<BankTransaction> getSortedTransactionsByDate() {
@@ -42,6 +47,12 @@ public class BankTransactionService {
     public List<BankTransaction> getSortedTransactionsByCategory() {
         return transactions.stream()
                 .sorted(Comparator.comparing(BankTransaction::getCategory))
+                .collect(Collectors.toList());
+    }
+
+    public List<BankTransaction> getSortedTransactionsByType() {
+        return transactions.stream()
+                .sorted(Comparator.comparing(BankTransaction::getType))
                 .collect(Collectors.toList());
     }
 }
