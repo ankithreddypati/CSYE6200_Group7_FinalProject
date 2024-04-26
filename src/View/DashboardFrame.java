@@ -79,7 +79,7 @@ public class DashboardFrame extends JFrame {
         // Pass the service to the panel
         BankTransactionsPanel bankTransactionsPanel = new BankTransactionsPanel(bankTransactionService);
         AssetsAndLiabilitiesTransactionPanel assetsLiabilitiesPanel = new AssetsAndLiabilitiesTransactionPanel(assetLiabilityTransactionService);
-        InvestmentTransactionService invServ = new InvestmentTransactionService(currentUser.getAssetsLiabilitiesPath());
+        InvestmentTransactionService invServ = new InvestmentTransactionService(currentUser.investmentsPath());
         InvestmentTransactionPanel invPanel = new InvestmentTransactionPanel(invServ);
         JPanel investmentsPanel = new JPanel();
         investmentsPanel.add(new JLabel("Investment details displayed here."));
