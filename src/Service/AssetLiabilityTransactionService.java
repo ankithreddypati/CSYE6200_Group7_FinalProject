@@ -19,27 +19,20 @@ public class AssetLiabilityTransactionService {
         return transactions;
     }
 
-    /*public double calculateCurrentNetWorth() {
-        return transactions.stream()
-                .mapToDouble(t -> {
-                    if (t.getCategory().equals("Asset")) {
-                        return t.getValue();
-                    } else if (t.getCategory().equals("Liability")) {
-                        return -t.getValue();
-                    } else {
-                        return 0.0;
-                    }
-                    switch(t.getCategory()){
-                        case "Asset":
-                            return t.getValue();
-                        case "Liability":
-                            return -t.getValue();
-                        default:
-                            return 0.0;
-                    }
-                })
+    public double calculateCurrentNetWorth() {
+        double totalAssets = transactions.stream()
+                .filter(t -> "Asset".equals(t.getCategory()))
+                .mapToDouble(AssetLiabilityTransaction::getValue)
                 .sum();
-    }*/
+
+        double totalLiabilities = transactions.stream()
+                .filter(t -> "Liability".equals(t.getCategory()))
+                .mapToDouble(AssetLiabilityTransaction::getValue)
+                .sum();
+
+        return totalAssets - totalLiabilities;
+    }
+
 
     public double getTotalValueByCategory(String category) {
         return transactions.stream()

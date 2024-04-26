@@ -48,5 +48,11 @@ public class InvestmentTransactionService {
                 .sorted(Comparator.comparing(InvestmentTransaction::getSubcategory))
                 .collect(Collectors.toList());
     }
+
+    public double calculateTotalCurrentValue() {
+        return transactions.stream()
+                .mapToDouble(InvestmentTransaction::getCurrentValue)
+                .sum();
+    }
 }
 

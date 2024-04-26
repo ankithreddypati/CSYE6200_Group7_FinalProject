@@ -1,31 +1,23 @@
-ID,Category,Subcategory,Date,Value,Description
-1,Asset,Real Estate,2021-01-15,300000,Home purchase in Springfield
-2,Asset,Stocks,2021-02-20,15000,Investment in Apple Inc. stocks
-3,Liability,Credit Card,2021-03-01,-5000,Visa Card expenses
-4,Liability,Loan,2021-04-10,-20000,Car loan
-5,Asset,Real Estate,2021-05-25,250000,Vacation home in Florida
-6,Asset,Bonds,2021-06-15,20000,US Treasury Bonds
-7,Liability,Loan,2021-07-05,-15000,Personal loan
-8,Liability,Mortgage,2021-08-20,-350000,Mortgage for primary residence
-9,Asset,Real Estate,2021-09-30,450000,Investment property in Texas
-10,Asset,Stocks,2021-10-18,22000,Investment in Tesla Inc. stocks
-11,Asset,Real Estate,2021-11-22,180000,Commercial property in New York
-12,Asset,Cryptocurrency,2021-12-05,13000,Investment in Bitcoin
-13,Liability,Credit Card,2021-12-21,-3000,MasterCard expenses
-14,Liability,Loan,2022-01-15,-25000,Student loan
-15,Asset,Stocks,2022-02-09,50000,Investment in Nvidia Corporation stocks
-16,Asset,Bonds,2022-03-22,30000,Corporate bonds from ABC Corp
-17,Liability,Medical Bills,2022-04-07,-12000,Hospital expenses from surgery
-18,Liability,Mortgage,2022-05-18,-400000,Second home mortgage
-19,Asset,Real Estate,2022-06-30,350000,Lakehouse in Michigan
-20,Asset,Collectibles,2022-07-25,45000,Antique car collection
-21,Asset,Real Estate,2022-08-19,275000,Apartment complex investment
-22,Asset,Stocks,2022-09-13,32000,Investment in Amazon Inc. stocks
-23,Liability,Credit Card,2022-10-08,-7000,Amex Card expenses
-24,Liability,Loan,2022-11-01,-30000,Home renovation loan
-25,Asset,Real Estate,2022-12-10,500000,Luxury condo in Las Vegas
-26,Asset,Art,2023-01-05,60000,Original Van Gogh painting
-27,Liability,Taxes,2023-02-20,-15000,Property tax due
-28,Liability,Mortgage,2023-03-15,-450000,Mortgage on new office building
-29,Asset,Real Estate,2023-04-12,750000,Ranch in Colorado
-30,Asset,Stocks,2023-05-09,85000,Investment in Google LLC stocks
+ID,Date,Amount,category,Subcategory,Description
+1,2021-01-15,300000,Asset,Real Estate,Home purchase in Springfield
+3,2021-03-01,-5000,Liability,Credit Card,Visa Card expenses
+4,2021-04-10,-20000,Liability,Loan,Car loan
+5,2021-05-25,250000,Asset,Real Estate,Vacation home in Florida
+6,2021-06-15,20000,Asset,Bonds,US Treasury Bonds
+7,2021-07-05,-15000,Liability,Loan,Personal loan
+8,2021-08-20,-350000,Liability,Mortgage,Mortgage for primary residence
+11,2021-11-22,180000,Asset,Real Estate,Commercial property in New York
+13,2021-12-21,-3000,Liability,Credit Card,MasterCard expenses
+14,2022-01-15,-25000,Liability,Loan,Student loan
+16,2022-03-22,30000,Asset,Bonds,Corporate bonds from ABC Corp
+17,2022-04-07,-12000,Liability,Medical Bills,Hospital expenses from surgery
+18,2022-05-18,-400000,Liability,Mortgage,Second home mortgage
+19,2022-06-30,350000,Asset,Real Estate,Lakehouse in Michigan
+20,2022-07-25,45000,Asset,Collectibles,Antique car collection
+23,2022-10-08,-7000,Liability,Credit Card,Amex Card expenses
+24,2022-11-01,-30000,Liability,Loan,Home renovation loan
+25,2022-12-10,500000,Asset,Real Estate,Luxury condo in Las Vegas
+26,2023-01-05,60000,Asset,Art,Original Van Gogh painting
+27,2023-02-20,-15000,Liability,Taxes,Property tax due
+28,2023-03-15,-450000,Liability,Mortgage,Mortgage on new office building
+29,2023-04-12,750000,Asset,Real Estate,Ranch in Colorado

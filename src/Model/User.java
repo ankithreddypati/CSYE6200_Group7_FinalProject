@@ -101,6 +101,10 @@ public class User {
         return bankTransactionsPath;
     }
 
+    public String getInvestmentsPath(){
+        return investmentsPath;
+    }
+
     @Override
     public String toString() {
         return "User{" +
