@@ -11,6 +11,8 @@ public class InvestmentTransactionService {
 
     public InvestmentTransactionService(String filePath) {
         this.transactions = CSVReader.readInvestmentTransaction(filePath);
+
+
     }
 
     public List<InvestmentTransaction> getTransactions() {
