@@ -1,5 +1,6 @@
 package Util;
 
+import Model.AssetLiabilityTransaction;
 import Model.BankTransaction;
 import Model.InvestmentTransaction;
 import Model.Transaction;
@@ -51,4 +52,24 @@ public class CSVReader {
         }
         return transactions;
     }
+
+    public static List<AssetLiabilityTransaction> readAssetLiabilityTransactions(String filePath) {
+        List<AssetLiabilityTransaction> transactions = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            reader.readLine(); // Skip header
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                // Use TransactionFactory to create AssetLiabilityTransaction
+                Transaction transaction = TransactionFactory.createTransaction("AssetLiability", data);
+                if (transaction instanceof AssetLiabilityTransaction) {
+                    transactions.add((AssetLiabilityTransaction) transaction);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+        return transactions;
+    }
+
 }

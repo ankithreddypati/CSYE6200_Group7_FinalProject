@@ -1,6 +1,7 @@
 package View;
 
 import Model.User;
+import Service.AssetLiabilityTransactionService;
 import Service.BankTransactionService;
 import Service.InvestmentTransactionService;
 
@@ -15,6 +16,7 @@ public class DashboardFrame extends JFrame {
 
     private User currentUser;
     private BankTransactionService bankTransactionService;
+    private AssetLiabilityTransactionService assetLiabilityTransactionService;
 
     public DashboardFrame(User user) {
         this.currentUser = user;
@@ -24,7 +26,8 @@ public class DashboardFrame extends JFrame {
         System.out.println(currentUser.getBankTransactionsPath());
         // Initialize the service with the path to the bank transactions CSV
         this.bankTransactionService = new BankTransactionService(currentUser.getBankTransactionsPath());
-
+        this.assetLiabilityTransactionService= new AssetLiabilityTransactionService(currentUser.getAssetsLiabilitiesPath());
+        System.out.println(currentUser.getAssetsLiabilitiesPath());
         initUI();
     }
 
@@ -75,11 +78,9 @@ public class DashboardFrame extends JFrame {
 
         // Pass the service to the panel
         BankTransactionsPanel bankTransactionsPanel = new BankTransactionsPanel(bankTransactionService);
-
+        AssetsAndLiabilitiesTransactionPanel assetsLiabilitiesPanel = new AssetsAndLiabilitiesTransactionPanel(assetLiabilityTransactionService);
         InvestmentTransactionService invServ = new InvestmentTransactionService(currentUser.investmentsPath());
         InvestmentTransactionPanel invPanel = new InvestmentTransactionPanel(invServ);
-        JPanel assetsLiabilitiesPanel = new JPanel();
-        assetsLiabilitiesPanel.add(new JLabel("Assets and liabilities details displayed here."));
         JPanel investmentsPanel = new JPanel();
         investmentsPanel.add(new JLabel("Investment details displayed here."));
 

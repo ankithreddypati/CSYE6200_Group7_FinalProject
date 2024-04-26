@@ -16,7 +16,39 @@ public class AssetLiabilityTransaction extends Transaction {
         this.description = description;
     }
 
-    // Getters and setters for value, category, subcategory, description
+    // Getters
+    public double getValue() {
+        return value;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    // Setters
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public void displayTransactionDetails() {
