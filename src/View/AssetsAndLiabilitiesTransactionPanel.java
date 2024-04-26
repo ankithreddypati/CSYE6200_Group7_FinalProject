@@ -1,22 +1,26 @@
 package View;
 
+import Model.AssetLiabilityTransaction;
 import Service.AssetLiabilityTransactionService;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.chart.plot.PlotOrientation;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class AssetsAndLiabilitiesTransactionPanel extends JPanel {
     private AssetLiabilityTransactionService service;
     private DefaultTableModel assetsTableModel;
     private DefaultTableModel liabilitiesTableModel;
+    private JTable assetsTable;
+    private JTable liabilitiesTable;
 
     public AssetsAndLiabilitiesTransactionPanel(AssetLiabilityTransactionService service) {
         super(new BorderLayout());
@@ -32,11 +36,66 @@ public class AssetsAndLiabilitiesTransactionPanel extends JPanel {
 
         add(topPanel, BorderLayout.NORTH);
         add(tablesPane, BorderLayout.CENTER);
+
+        // Add sort buttons
+        JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton sortByDateButton = new JButton("Sort by Date");
+        JButton sortByValueButton = new JButton("Sort by Value");
+        JButton sortByCategoryButton = new JButton("Sort by Category");
+        sortPanel.add(sortByDateButton);
+        sortPanel.add(sortByValueButton);
+        sortPanel.add(sortByCategoryButton);
+        add(sortPanel, BorderLayout.SOUTH);
+
+        // Add action listeners for sort buttons
+        sortByDateButton.addActionListener(e -> {
+            updateTableData(service.getSortedTransactionsByDate());
+        });
+        sortByValueButton.addActionListener(e -> {
+            updateTableData(service.getSortedTransactionsByValue());
+        });
+        sortByCategoryButton.addActionListener(e -> {
+            updateTableData(service.getSortedTransactionsByCategory());
+        });
+
+        // Populate the tables initially
+        updateTableData(service.getTransactions());
+    }
+
+    private void updateTableData(List<AssetLiabilityTransaction> transactions) {
+        assetsTableModel.setRowCount(0);
+        liabilitiesTableModel.setRowCount(0);
+
+        List<AssetLiabilityTransaction> assets = transactions.stream()
+                .filter(t -> "Asset".equals(t.getCategory()))
+                .collect(Collectors.toList());
+        List<AssetLiabilityTransaction> liabilities = transactions.stream()
+                .filter(t -> "Liability".equals(t.getCategory()))
+                .collect(Collectors.toList());
+
+        assets.forEach(t -> assetsTableModel.addRow(new Object[]{
+                new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
+                t.getValue(),
+                t.getCategory(),
+                t.getSubcategory(),
+                t.getDescription()
+        }));
+
+        liabilities.forEach(t -> liabilitiesTableModel.addRow(new Object[]{
+                new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
+                t.getValue(),
+                t.getCategory(),
+                t.getSubcategory(),
+                t.getDescription()
+        }));
+
+        assetsTable.repaint();
+        liabilitiesTable.repaint();
     }
 
     private JPanel setupNetWorthAndPieChartPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel netWorthLabel = new JLabel("Current Net Worth: $" + (service.getTotalValueByCategory("Asset") + service.getTotalValueByCategory("Liability")));
+        JLabel netWorthLabel = new JLabel("Current Net Worth: $" + service.calculateCurrentNetWorth());
         netWorthLabel.setFont(new Font("Arial", Font.BOLD, 16));
         panel.add(netWorthLabel, BorderLayout.NORTH);
 
@@ -62,50 +121,14 @@ public class AssetsAndLiabilitiesTransactionPanel extends JPanel {
     private JScrollPane setupAssetsTable() {
         String[] columns = {"Date", "Value", "Category", "Subcategory", "Description"};
         assetsTableModel = new DefaultTableModel(columns, 0);
-        service.getSortedTransactionsByDate().stream()
-                .filter(t -> "Asset".equals(t.getCategory()))
-                .forEach(t -> assetsTableModel.addRow(new Object[]{
-                        new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
-                        t.getValue(),
-                        t.getCategory(),
-                        t.getSubcategory(),
-                        t.getDescription()
-                }));
-        //fillTableModel(assetsTableModel, "Asset");
-        JTable table = new JTable(assetsTableModel);
-        table.setRowSorter(new TableRowSorter<>(assetsTableModel));
-        return new JScrollPane(table);
+        assetsTable = new JTable(assetsTableModel);
+        return new JScrollPane(assetsTable);
     }
 
     private JScrollPane setupLiabilitiesTable() {
         String[] columns = {"Date", "Value", "Category", "Subcategory", "Description"};
         liabilitiesTableModel = new DefaultTableModel(columns, 0);
-        service.getSortedTransactionsByDate().stream()
-                .filter(t -> "Liability".equals(t.getCategory()))
-                .forEach(t -> liabilitiesTableModel.addRow(new Object[]{
-                        new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
-                        t.getValue(),
-                        t.getCategory(),
-                        t.getSubcategory(),
-                        t.getDescription()
-                }));
-        //fillTableModel(liabilitiesTableModel, "Liability");
-        JTable table = new JTable(liabilitiesTableModel);
-        table.setRowSorter(new TableRowSorter<>(liabilitiesTableModel));
-        return new JScrollPane(table);
+        liabilitiesTable = new JTable(liabilitiesTableModel);
+        return new JScrollPane(liabilitiesTable);
     }
-
-    /*private void fillTableModel(DefaultTableModel model, String category) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        service.getTransactions().stream()
-                .filter(t -> category.equals(t.getCategory()))
-                .forEach(t -> model.addRow(new Object[]{
-                        sdf.format(t.getDate()),
-                        t.getValue(),
-                        t.getCategory(),
-                        t.getSubcategory(),
-                        t.getDescription()
-                }));
-    }*/
 }
-

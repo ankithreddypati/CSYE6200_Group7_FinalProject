@@ -7,17 +7,22 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import java.lang.Math;
+
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BankTransactionsPanel extends JPanel {
     private BankTransactionService service;
     private DefaultTableModel creditsTableModel;
     private DefaultTableModel debitsTableModel;
+    private JTable creditsTable;
+    private JTable debitsTable;
 
     public BankTransactionsPanel(BankTransactionService service) {
         super(new BorderLayout());
@@ -39,6 +44,56 @@ public class BankTransactionsPanel extends JPanel {
 
         add(topPanel, BorderLayout.NORTH);
         add(bottomPanel, BorderLayout.CENTER);
+
+        JPanel sortPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton sortByDateButton = new JButton("Sort by Date");
+        JButton sortByAmountButton = new JButton("Sort by Amount");
+        JButton sortByCategoryButton = new JButton("Sort by Category");
+        sortPanel.add(sortByDateButton);
+        sortPanel.add(sortByAmountButton);
+        sortPanel.add(sortByCategoryButton);
+        add(sortPanel, BorderLayout.SOUTH);
+
+        sortByDateButton.addActionListener(e -> {
+            updateTableData(service.getSortedTransactionsByDate());
+        });
+        sortByAmountButton.addActionListener(e -> {
+            updateTableData(service.getSortedTransactionsByAmount());
+        });
+        sortByCategoryButton.addActionListener(e -> {
+            updateTableData(service.getSortedTransactionsByCategory());
+        });
+
+        updateTableData(service.getTransactions());
+    }
+
+    private void updateTableData(List<BankTransaction> transactions) {
+        creditsTableModel.setRowCount(0);
+        debitsTableModel.setRowCount(0);
+
+        List<BankTransaction> credits = transactions.stream()
+                .filter(t -> "Credit".equals(t.getType()))
+                .collect(Collectors.toList());
+        List<BankTransaction> debits = transactions.stream()
+                .filter(t -> "Debit".equals(t.getType()))
+                .collect(Collectors.toList());
+
+        credits.forEach(t -> creditsTableModel.addRow(new Object[]{
+                new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
+                t.getAmount(),
+                t.getCategory(),
+                t.getDescription()
+        }));
+
+        debits.forEach(t -> debitsTableModel.addRow(new Object[]{
+                new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
+                t.getAmount(),
+                t.getCategory(),
+                t.getDescription()
+        }));
+
+        creditsTable.repaint();
+        debitsTable.repaint();
     }
 
     private JPanel setupCurrentBalanceAndLineChartPanel() {
@@ -48,8 +103,9 @@ public class BankTransactionsPanel extends JPanel {
         panel.add(balanceLabel, BorderLayout.NORTH);
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        List<BankTransaction> sortedTransactions = service.getSortedTransactionsByDate();
         double balance = 0;
-        for (BankTransaction transaction : service.getTransactions()) {
+        for (BankTransaction transaction : sortedTransactions) {
             double amount = "Credit".equals(transaction.getType()) ? transaction.getAmount() : -transaction.getAmount();
             balance += amount;
             dataset.addValue(balance, "Balance", new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate()));
@@ -63,12 +119,17 @@ public class BankTransactionsPanel extends JPanel {
 
     private ChartPanel setupPieChartPanel() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        double totalCredits = service.getTransactions().stream()
+        List<BankTransaction> sortedTransactions = service.getSortedTransactionsByType();
+
+        double totalCredits = sortedTransactions.stream()
                 .filter(t -> "Credit".equals(t.getType()))
-                .mapToDouble(BankTransaction::getAmount).sum();
-        double totalDebits = service.getTransactions().stream()
+                .mapToDouble(BankTransaction::getAmount)
+                .sum();
+
+        double totalDebits = sortedTransactions.stream()
                 .filter(t -> "Debit".equals(t.getType()))
-                .mapToDouble(BankTransaction::getAmount).sum();
+                .mapToDouble(BankTransaction::getAmount)
+                .sum();
 
         dataset.setValue("Incomes", totalCredits);
         dataset.setValue("Expenses", totalDebits);
@@ -79,31 +140,25 @@ public class BankTransactionsPanel extends JPanel {
 
     private JScrollPane setupCreditsTable() {
         creditsTableModel = new DefaultTableModel(new String[]{"Date", "Amount", "Category", "Description"}, 0);
-        service.getSortedTransactionsByDate().stream()
-                .filter(t -> "Credit".equals(t.getType()))
-                .forEach(t -> creditsTableModel.addRow(new Object[]{
-                        new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
-                        t.getAmount(),
-                        t.getCategory(),
-                        t.getDescription()
-                }));
-        JTable table = new JTable(creditsTableModel);
-        table.setRowSorter(new TableRowSorter<>(creditsTableModel));
-        return new JScrollPane(table);
+        creditsTable = new JTable(creditsTableModel);
+        return new JScrollPane(creditsTable);
     }
 
     private JScrollPane setupDebitsTable() {
         debitsTableModel = new DefaultTableModel(new String[]{"Date", "Amount", "Category", "Description"}, 0);
-        service.getSortedTransactionsByDate().stream()
+        debitsTable = new JTable(debitsTableModel);
+
+        List<BankTransaction> sortedDebits = service.getSortedTransactionsByType().stream()
                 .filter(t -> "Debit".equals(t.getType()))
-                .forEach(t -> debitsTableModel.addRow(new Object[]{
-                        new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
-                        t.getAmount(),  // Display debits as positive values
-                        t.getCategory(),
-                        t.getDescription()
-                }));
-        JTable table = new JTable(debitsTableModel);
-        table.setRowSorter(new TableRowSorter<>(debitsTableModel));
-        return new JScrollPane(table);
+                .collect(Collectors.toList());
+
+        sortedDebits.forEach(t -> debitsTableModel.addRow(new Object[]{
+                new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()),
+                Math.abs(t.getAmount()),  // Display debits as positive values
+                t.getCategory(),
+                t.getDescription()
+        }));
+
+        return new JScrollPane(debitsTable);
     }
 }
