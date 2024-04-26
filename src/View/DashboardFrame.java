@@ -17,6 +17,9 @@ public class DashboardFrame extends JFrame {
     private User currentUser;
     private BankTransactionService bankTransactionService;
     private AssetLiabilityTransactionService assetLiabilityTransactionService;
+    private InvestmentTransactionService invTransactionService;
+
+
 
     public DashboardFrame(User user) {
         this.currentUser = user;
@@ -26,6 +29,7 @@ public class DashboardFrame extends JFrame {
         System.out.println(currentUser.getBankTransactionsPath());
         this.bankTransactionService = new BankTransactionService(currentUser.getBankTransactionsPath());
         this.assetLiabilityTransactionService = new AssetLiabilityTransactionService(currentUser.getAssetsLiabilitiesPath());
+        this.invTransactionService= new InvestmentTransactionService(currentUser.getInvestmentsPath());
         System.out.println(currentUser.getAssetsLiabilitiesPath());
         initUI();
     }
@@ -76,20 +80,21 @@ public class DashboardFrame extends JFrame {
         cardLayout = new CardLayout();
         rightPanel.setLayout(cardLayout);
 
-        JPanel overviewPanel = new JPanel();
-        overviewPanel.add(new JLabel("Overview details displayed here."));
+        OverviewPanel overviewPanel = new OverviewPanel(currentUser, bankTransactionService, assetLiabilityTransactionService, invTransactionService);
+
+
 
         BankTransactionsPanel bankTransactionsPanel = new BankTransactionsPanel(bankTransactionService);
         AssetsAndLiabilitiesTransactionPanel assetsLiabilitiesPanel = new AssetsAndLiabilitiesTransactionPanel(assetLiabilityTransactionService);
-        InvestmentTransactionService invServ = new InvestmentTransactionService(currentUser.investmentsPath());
-        InvestmentTransactionPanel invPanel = new InvestmentTransactionPanel(invServ);
-        JPanel investmentsPanel = new JPanel();
-        investmentsPanel.add(new JLabel("Investment details displayed here."));
+        InvestmentTransactionPanel invServ = new InvestmentTransactionPanel(invTransactionService);
+
+
+
 
         rightPanel.add(overviewPanel, "Overview");
         rightPanel.add(bankTransactionsPanel, "BankTransactions");
         rightPanel.add(assetsLiabilitiesPanel, "AssetsLiabilities");
-        rightPanel.add(invPanel, "Investments");
+        rightPanel.add(invServ, "Investments");
 
         splitPane.setRightComponent(rightPanel);
     }
